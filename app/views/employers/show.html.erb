@@ -1,0 +1,71 @@
+<%= provide(:title, "Profile - #{@employer.name}") %>
+
+<% if signed_in? && current_user?(@employer)%>
+<div class="row-fluid">
+	<div class="col-md-2 col-md-offset-2">
+		<ul class="nav nav-pills nav-stacked">
+			<li class="active">
+				<a href="#">
+				Messages<span class="badge pull-right">--</span> 
+				<!-- @account.messages  -->
+				</a>
+			</li>
+			<li class="active">
+				<%= link_to employers_path do %>
+				Contacts <span class="badge pull-right">-<%= @employer_count %>-</span> 
+				<% end %>
+				<!-- @account.messages  -->
+			</li>
+			<li class="active">
+				<%= link_to edit_employer_path(@employer) do %>
+				Edit My Info <span class="badge pull-right"></span> 
+				<% end %>
+				<!-- @account.messages  -->
+			</li>
+			<li class="active">
+				<%= link_to new_job_posting_path do %>
+				Add a Job Posting (<%= @jobpostfeed_items.count %>)<span class="badge pull-right">+</span> 
+				<% end %>
+				<!-- @account.messages  -->
+			</li>
+
+		</ul>
+	</div>
+	<div class="col-md-6 col-md-offset-0">
+		<h1>My Profile Page</h1>
+		<div class="panel panel-default panel-primary">
+	        <div class="panel-heading">
+	        	Your Job Postings
+	        	<%= link_to new_job_posting_path, class: "white-font" do %>
+	        	<p class="pull-right">
+	        		<span class="glyphicon glyphicon-plus-sign"></span>&nbsp; Add Job Posting
+	        	</p>
+	        	<% end %>
+	        </div>
+	    	<ul class="list-group">
+
+	    		
+		        <li class="list-group-item"><%= render 'shared/jobpostfeed' %></li>
+
+	        </ul>
+        </div>
+	</div>
+</div>
+
+
+<% elsif signed_in? %>
+<div class="row-fluid">
+	<div class="col-md-9 col-md-offset-4">
+		<h1>This is <%= @employer.name.capitalize %>'s Profile Page!</h1>
+		<h3>Type: Employer</h3>
+	</div>
+</div>
+
+
+<% else %>
+<div class="row-fluid">
+	<div class="col-md-9 col-md-offset-4">
+		<h1>You must sign in to view the complete profile</h1>
+	</div>
+</div>
+<% end %>

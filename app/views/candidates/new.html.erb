@@ -1,0 +1,62 @@
+<%= provide(:title, "Add a New Candidate") %>
+
+<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+			<h1>Add A Candidate</h1> <br/>
+			<%= form_for(@candidate, :html => { class: "form-horizontal", role: "form" } ) do |f| %>
+				<%= render 'shared/error_messages', awesomeobject: @candidate %>
+
+  				<div class="form-group">
+					<%= f.label :name, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :name, class: "form-control", placeholder: "Candidate Name" %>
+					</div>
+				</div>
+
+  				<div class="form-group">
+					<%= f.label :bio, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_area :bio, class: "form-control", placeholder: "Please Enter Candidate Details", cols: 40, rows: 15 %>
+					</div>
+				</div>		
+
+				<div class="form-group">
+					<%= f.label :additional_skills, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :additional_skills, class: "form-control", placeholder: "Additional Skills" %>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<%= f.label :city, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :city, class: "form-control", placeholder: "City" %>
+					</div>
+				</div>
+
+ 				<div class="form-group">
+					<%= f.label :state, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :state, class: "form-control", placeholder: "State" %>
+					</div>
+				</div>
+
+				<div class="form-group">
+				<%= f.label :has_transport, "Has Own Transport?", :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.check_box :has_transport %>
+					</div>
+				</div>
+					
+
+
+  				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<%= f.submit "Add Candidate", class: "btn btn-large btn-primary" %>
+					</div>
+				</div>
+
+			<% end %>
+
+		</div>
+	</div>

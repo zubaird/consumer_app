@@ -1,0 +1,76 @@
+<%= provide(:title, "Home") %>
+
+<div class="row-fluid">
+	<div class="col-md-9 col-md-offset-2">
+  <% if signed_in? && current_user?(@account)%>
+      <%= provide(:title, " - #{@account.name}") %>
+      <h1>You are currently signed in as <em><%= current_user.name %></em></h1>
+  </div>
+  <% else %>
+    		<div class="page-header">
+      			<h1>Register now <small>(it's totally worth it)</small></h1>
+    		</div>
+  	</div>
+  </div>
+  <% end %>
+    <div class="row-fluid">
+      <div class="col-md-9 col-md-offset-2">
+          <div class="jumbotron">
+            <h1>Catchy or super true statement</h1><br/>
+            <p>
+              This app is a service for connecting smart employers with job seeking consumers. <br/>
+              There are two account types currently available, Sponsors and Employers.  Their features are defined <br/>
+              in the area below.  Sponsors act as the liasons, they connect candidates with employers.<br/><br/></p>
+               <span>
+                <div class="row-fluid">
+                  <div class="col-md-2 col-md-offset-2">
+                    <p><%= link_to "Sign in", signin_path , class: "btn btn-default center-block", id: "account_signin" %></p>
+                  </div>  
+                </div>
+              </span>
+              <span>
+                <div class="row-fluid">
+                  <div class="col-md-6 col-md-offset-0">
+                      <p><%= link_to "Sign me up!", new_account_path , class: "btn btn-primary btn-lg btn-lg pull-right larger", id: "account_signup" %></p>
+                  </div>
+                </div>
+              </span>
+          </div>  
+      </div>
+    </div>
+
+
+    <div class="row-fluid">
+      <div class="col-md-9 col-md-offset-2">
+        <h2>Ex. Account Categories</h3>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="col-md-3 col-md-offset-2">
+        <div class="thumbnail">
+          <img data-src="holder.js/300x200" alt="">
+          <div class="caption">
+            <h3>Employer Accounts</h3>
+            <p>Sees directory of accounts, consumers, has own profile page and job listing page <br/><br/><br/><br/></p>
+          </div>
+        </div>
+      </div>
+        <div class="col-md-3">
+        <div class="thumbnail">
+          <img data-src="holder.js/300x200" alt="">
+          <div class="caption">
+            <h3>Sponsor Accounts</h3>
+            <p>Sees directory of employers, sees own consumers, can register for consumers, full access consumer profile page, full access account page <br/><br/></p>
+          </div>
+        </div>
+      </div>
+        <div class="col-md-3">
+        <div class="thumbnail">
+          <img data-src="holder.js/300x200" alt="">
+          <div class="caption">
+            <h3>Consumer Accounts</h3>
+            <p> Sees employer directory, full access to own profile page, posts, consumer directory, can connect to other consumers.<br/><br/></p>
+          </div>
+        </div>
+  </div>
+</div>

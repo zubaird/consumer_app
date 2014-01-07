@@ -1,0 +1,16 @@
+<li class="list-group-item <%= cycle("oddpost", "evenpost")%>" id="<%= candidatesfeed_item.id %>">
+
+  <span class="content"><h2><%= link_to candidatesfeed_item.name, candidatesfeed_item.sponsor %></h2></span>
+    <span class="user">
+  Sponsor - <%=  candidatesfeed_item.sponsor.name %>,
+  </span>
+  <span class="timestamp">
+    Updated <%= time_ago_in_words(candidatesfeed_item.created_at) %> ago.
+  </span>
+  <span class="delete">
+  <% if current_user?(@sponsor) %>
+  <%= link_to "|Delete|", candidatesfeed_item, method: :delete, confirm: "Are you sure?", name: candidatesfeed_item.bio %>
+  <% end %>
+  </span>
+
+</li>

@@ -1,0 +1,13 @@
+<% provide(:title, 'All Employers') %>
+
+<div class="row-fluid">
+    <div class="col-md-6 col-md-offset-3">
+		<h1>All Employers</h1>
+
+		<%= will_paginate @employers, renderer: BootstrapPagination::Rails  %>
+		<ul class="users">
+		<%= render @employers %>
+		</ul>
+		<%= will_paginate @employers, renderer: BootstrapPagination::Rails %>
+	</div>
+</div>

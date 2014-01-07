@@ -1,0 +1,28 @@
+<%= provide(:title, "Update Profile - #{@employer.name}") %>
+
+	<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+			<h1>Update your profile and settings</h1> <br/>
+			<%= form_for(@employer) do |f| %>
+				<%= render 'shared/error_messages', awesomeobject: @employer %>
+
+				<%= f.label :name %> <br/>
+				<%= f.text_field :name %> <br/>
+
+
+				<%= f.label :email %> <br/>
+				<%= f.text_field :email %> <br/>
+
+				<%= f.label :password %> <br/>
+				<%= f.password_field :password %> <br/>
+
+
+				<%= f.label :password_confirmation, "Confirm Password" %> <br/>
+				<%= f.password_field :password_confirmation %> <br/><br/>
+
+
+				<%= f.submit "Update", class: "btn btn-large btn-primary" %>
+
+			<% end %>
+		</div>
+	</div>

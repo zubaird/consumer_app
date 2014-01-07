@@ -1,0 +1,9 @@
+<li class="list-group-item <%= cycle("oddpost", "evenpost")%>" id="<%= jobpostfeed_item.id %>">
+  <span class="user">
+	<%=  jobpostfeed_item.employer.name %>:
+  </span>
+  <span class="content"><h2><%= link_to jobpostfeed_item.title, jobpostfeed_item.employer %></h2></span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(jobpostfeed_item.created_at) %> ago.
+  </span>
+</li>

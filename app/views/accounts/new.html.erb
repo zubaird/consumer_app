@@ -1,0 +1,55 @@
+<%= provide(:title, "New Account Signup!") %>
+
+
+	<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+			<h1>Sign up here!</h1> <br/>
+			<%= form_for(@account, :html => { class: "form-horizontal", role: "form" } ) do |f| %>
+				<%= render 'shared/error_messages', awesomeobject: @account %>
+
+  				<div class="form-group">
+					<%= f.label :name, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :name, class: "form-control", placeholder: "Name" %>
+					</div>
+				</div>
+
+  				<div class="form-group">
+					<%= f.label :email, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :email, class: "form-control", placeholder: "E-mail" %>
+					</div>
+				</div>		
+
+				<div class="form-group">
+					<%= f.label :type, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :type, class: "form-control", placeholder: "Please type to indicate that you are either an 'Employer' or  'Sponsor', ensure capitalization" %>
+					</div>
+				</div>
+
+  				<div class="form-group">
+					<%= f.label :password, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+					</div>
+				</div>
+
+
+  				<div class="form-group">
+					<%= f.label :password_confirmation, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password" %>
+					</div>
+				</div>
+
+  				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+					</div>
+				</div>
+
+			<% end %>
+
+		</div>
+	</div>

@@ -1,0 +1,51 @@
+@import "twitter/bootstrap";
+
+$lightGray: #999;
+
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: $lightGray;
+}
+footer a {
+  color: #555;
+}
+
+footer a:hover {
+  color: #222;
+}
+
+footer small {
+  float: left;
+}
+
+footer ul {
+  float: right;
+  list-style: none;
+}
+
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+
+.supericon {
+
+  font-weight: 900;
+  font-size: 1em;
+
+} 
+
+.white-font {
+  color:#ffffff;
+}
+
+.larger {
+
+  height: 40px;
+  width: 300px;
+
+}

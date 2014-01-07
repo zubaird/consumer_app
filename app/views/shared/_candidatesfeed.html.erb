@@ -1,0 +1,6 @@
+<% if @candidatesfeed_items.any? %>
+  <ul class="list-group">
+    <%= render partial: 'shared/candidatesfeed_item', collection: @candidatesfeed_items %><br/>
+  </ul>
+  <%= will_paginate @candidatesfeed_items %>
+<% end %>
