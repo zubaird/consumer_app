@@ -2,15 +2,35 @@ ConsumerApp::Application.routes.draw do
 
   root :to => "static_pages#home"
 
-  resources :job_postings, only: [:new, :create]
+  # concern :followable do
+  #     get 'followthis'
+  # end
 
-  resources :accounts
+  resources :accounts 
+  resources :mailboxes
 
-  resources :employers
 
-  resources :sponsors
+  resources :employers do
+    resources :mailboxes
+    resources :job_postings
+    member do 
+      get :followme
+    end
+  end  
+
+  #, concerns: :followable
+  resources :sponsors do 
+  resources :mailboxes
+    member do 
+      get :followme
+      get :jobsearch
+      post :jobsearch
+    end
+  end  
 
   resources :candidates #, only: [:new, :create, :delete]
+
+  resources :job_postings
 
 
   #resources :things_admins, :controller=>"users", :except=>[:new, :create]

@@ -8,6 +8,7 @@ gem 'rails', '4.0.2'
 # => gem 'bootstrap-sass', '2.3.2.0'
 gem 'bootstrap-sass-rails'
 gem 'mailboxer'
+gem 'sunspot_rails'
 
 gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
@@ -18,12 +19,15 @@ gem 'protected_attributes'
 gem 'heroku'
 gem 'will_paginate-bootstrap' 
 gem 'pg', '0.17.1'
+gem "acts_as_follower", '~> 0.2.0'
+gem 'acts-as-messageable'
+#gem 'mailboxer'
 
 group :development, :test do
   # => gem 'sqlite3', '1.3.8' - FOR HEROKU COMPATIBILITY
   # => gem 'pg', '0.17.1'
    gem 'rspec-rails'
-
+   gem "rails-erd"
   # The following optional lines are part of the advanced setup.
   # gem 'guard-rspec', '2.5.0'
    gem 'spork-rails', '4.0.0'

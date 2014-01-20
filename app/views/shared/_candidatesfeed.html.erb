@@ -1,6 +1,19 @@
-<% if @candidatesfeed_items.any? %>
-  <ul class="list-group">
-    <%= render partial: 'shared/candidatesfeed_item', collection: @candidatesfeed_items %><br/>
-  </ul>
-  <%= will_paginate @candidatesfeed_items %>
-<% end %>
+
+	<% if @sponsor.candidates.any? %>
+
+		<% @candidatesfeed.each do |post|  %>
+	
+			<li class="list-group-item <%= cycle("oddpost", "evenpost")%>" id="<%= post.id %>">
+				<span class="user">
+					<%= link_to candidate_path(post) do %>
+					<h4><%= post.name %></h4>
+					<% end %>
+				</span>
+				<span class="timestamp">
+					 <%= post.city %>,<%= post.state %> - Posted <%= time_ago_in_words(post.created_at) %> ago. 
+					| Trash it: <%= link_to "", post, method: :delete, data: { confirm: "Are you sure you want to delete '#{post.name}'? " }, title: post.name, class: "glyphicon glyphicon-trash" %>
+				</span>
+			</li>
+		<% end %>
+	<% end %>
+	<%= will_paginate @candidatesfeed, renderer: BootstrapPagination::Rails  %>

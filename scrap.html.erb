@@ -1,0 +1,6 @@
+<%= (current_user.mailbox.inbox.first.receipts_for current_user).count %>
+
+					<%  (current_user.mailbox.inbox.first.receipts_for current_user).each do |receipt| %>
+					<%= message = (current_user.mailbox.inbox.first.receipts_for current_user).message %>
+					<% read = (current_user.mailbox.inbox.first.receipts_for current_user).is_unread? #or message.is_unread?(alfa) %>
+					<% end %>

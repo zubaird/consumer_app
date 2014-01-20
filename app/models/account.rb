@@ -4,7 +4,8 @@ class Account < ActiveRecord::Base
 	#before_save { self.type = type.downcase }
 	before_create :create_remember_token
 
-  #has_many :job_postings, through: :employers, foreign_key: "id", dependent: :destroy
+  acts_as_followable
+  acts_as_follower
 
 	attr_accessible :name, :email, :password, :password_confirmation, :type
 	has_secure_password
@@ -13,18 +14,18 @@ class Account < ActiveRecord::Base
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }
-  validates :type, :inclusion  => { :in => %w(Sponsor Employer), :message => "%{value} is not a valid role" }
+  validates :type, :inclusion  => { :in => %w(Sponsor Employer Consumer), :message => "%{value} is not a valid role, you need to type in either 'Sponsor' or 'Employer', it is case-sensitive.  This step will also help us ensure that you are human." }
 
 
 
 
-   def Account.new_remember_token
-     SecureRandom.urlsafe_base64
-   end
+    def Account.new_remember_token
+      SecureRandom.urlsafe_base64
+    end
 
-   def Account.encrypt(token)
-     Digest::SHA1.hexdigest(token.to_s)
-   end
+    def Account.encrypt(token)
+      Digest::SHA1.hexdigest(token.to_s)
+    end
 
 
    private

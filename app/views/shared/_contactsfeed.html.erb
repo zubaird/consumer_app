@@ -1,0 +1,5 @@
+<% if current_user.follow_count > 0 %>
+  <ul class="list-group">
+    <%= render partial: 'shared/contactsfeed_item', collection: @candidatesfeed_items %><br/>
+  </ul>
+<% end %>

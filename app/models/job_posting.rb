@@ -11,7 +11,7 @@ class JobPosting < ActiveRecord::Base
 	VALID_LOCATION_REGEX = /[a-zA-Z]/i
 	validates :city, presence: true,  format: { with: VALID_LOCATION_REGEX } 
 	validates :state, presence: true, length: { maximum: 2 }, format: { with: VALID_LOCATION_REGEX } 
-	validates :tag, format: { with: VALID_LOCATION_REGEX } 
+	validates :tag, format: { with: VALID_LOCATION_REGEX }, :allow_blank => true
 	# validates :employer_id, presence: true
 
 def jobpostfeed

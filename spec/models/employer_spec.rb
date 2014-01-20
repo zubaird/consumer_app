@@ -22,6 +22,7 @@ subject { @employer }
 	it { should_not have_many(:candidates) }
 	#it { should have_db_index(:id) }
 
+    it { should respond_to(:followed_users) }
 
 
 end

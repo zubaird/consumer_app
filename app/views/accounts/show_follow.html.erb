@@ -1,0 +1,58 @@
+<%= provide(:title, @title ) %>
+
+<div class="row-fluid">
+    <div class="col-md-6 col-md-offset-2">
+			<section>
+				<h1> <%= @account.name %></h1>
+				<span><%= link_to "view my profile", @account %></span>
+				<span><b>Job Postings:</b>(jobpost_count)</span>
+				<%= render 'follow_form' %>
+			</section>
+			
+			<section>
+			
+				<% if @accounts.any? %>
+					<div class="user_avatars">
+						<% @accounts.each do |user| %>
+							<%= link_to account_path(user) %>
+						<% end %>
+					</div>
+				<% end %>
+    <div class="col-md-3 col-md-offset-">  	
+		<section>
+			<h2> All Users (testing purposes)</h2>
+
+				<% if @allaccounts.any? %>
+					<div class="user_avatars">
+						<ul>
+							<% @allaccounts.each do |user| %>
+							<li>
+								<%= user.name %>
+								#relationships path is not defined.
+								<%= form_for(current_user.relationships.build(followed_id: @account.id)) do |f| %>
+								<div><%= f.hidden_field :followed_id %></div>
+								<%= f.submit "Follow", class: "btn btn-large btn-primary" %>
+								<% end %>
+								<%= link_to account_path(user) %>
+							</li>
+							<% end %>
+						</ul>
+					</div>
+				<% end %>
+		</section>
+
+						<% if @accounts.any? %>
+					<div class="user_avatars">
+						<ul>
+							<% @accounts.each do |user| %>
+							<li>
+								<%= user.name %>
+								
+								<%= link_to account_path(user) %>
+							</li>
+							<% end %>
+						</ul>
+					</div>
+				<% end %>
+	</div>
+</div>

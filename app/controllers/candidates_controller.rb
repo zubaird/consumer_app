@@ -8,6 +8,10 @@ class CandidatesController < ApplicationController
  	@candidate = current_user.candidates.new
  end
 
+def show
+	@candidate = Candidate.find(params[:id])
+	@postingsponsor = Sponsor.find(@candidate.sponsor_id)
+end
 
 	def create
 		@candidate = current_user.candidates.build(params[:candidate])
@@ -21,8 +25,10 @@ class CandidatesController < ApplicationController
 	end
 
 	def destroy
+		if current_user? current_user
 		@candidate.destroy	
 		redirect_to sponsor_path(current_user)
+		end
 	end
 
 private

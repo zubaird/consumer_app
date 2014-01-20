@@ -2,27 +2,54 @@
 
 	<div class="row-fluid">
 		<div class="col-md-6 col-md-offset-3">
-			<h1>Add a Job Posting!</h1> <br/>
-			<%= form_for(@job_posting) do |f| %>
+			<h1>Post A New Job Opening</h1> <br/>
+			<%= form_for(@job_posting, :html => { class: "form-horizontal", role: "form" } ) do |f| %>
 				<%= render 'shared/error_messages', awesomeobject: @job_posting %>
 
-				<%= f.label :title %> <br/>
-				<%= f.text_field :title %> <br/>
+  				<div class="form-group">
+					<%= f.label :title, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :title, class: "form-control", placeholder: "Job Title" %>
+					</div>
+				</div>
 
-				<%= f.label :description %> <br/>
-				<%= f.text_field :description %> <br/>
+  				<div class="form-group">
+					<%= f.label :description, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_area :description, class: "form-control", placeholder: "Please Enter a Job Description and Contact Details", cols: 40, rows: 15 %>
+					</div>
+				</div>		
 
-				<%= f.label :city %> <br/>
-				<%= f.text_field :city %> <br/>
 
-				<%= f.label :state %> <br/>
-				<%= f.text_field :state %> <br/>
+				<div class="form-group">
+					<%= f.label :city, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :city, class: "form-control", placeholder: "City" %>
+					</div>
+				</div>
 
-				<%= f.label :tag, "Tag" %> <br/>
-				<%= f.text_field :tag %> <br/><br/>
+ 				<div class="form-group">
+					<%= f.label :state, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :state, class: "form-control", placeholder: "State" %>
+					</div>
+				</div>
 
-				<%= f.submit "Add Job Posting", class: "btn btn-large btn-primary" %>
+					
+				<div class="form-group">
+					<%= f.label :tag, :class => "col-sm-2 control-label" %>
+					<div class="col-sm-10">
+						<%= f.text_field :tag, class: "form-control", placeholder: "Reference Tag (optional)" %>
+					</div>
+				</div>
+
+  				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<%= f.submit "Post Job", class: "btn btn-large btn-primary" %>
+					</div>
+				</div>
 
 			<% end %>
+
 		</div>
 	</div>

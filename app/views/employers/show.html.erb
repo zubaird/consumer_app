@@ -6,13 +6,13 @@
 		<ul class="nav nav-pills nav-stacked">
 			<li class="active">
 				<a href="#">
-				Messages<span class="badge pull-right">--</span> 
+				Messages<span class="badge pull-right"><%= message_count(current_user) %></span> 
 				<!-- @account.messages  -->
 				</a>
 			</li>
 			<li class="active">
-				<%= link_to employers_path do %>
-				Contacts <span class="badge pull-right">-<%= @employer_count %>-</span> 
+				<%= link_to employer_path(@employer) do %>
+				Contacts <span class="badge pull-right"><%= current_user.follow_count %></span> 
 				<% end %>
 				<!-- @account.messages  -->
 			</li>
@@ -24,15 +24,25 @@
 			</li>
 			<li class="active">
 				<%= link_to new_job_posting_path do %>
-				Add a Job Posting (<%= @jobpostfeed_items.count %>)<span class="badge pull-right">+</span> 
+				Add Job Posting (<%= @jobpostfeed_items.count %>)<span class="badge pull-right"></span> 
 				<% end %>
 				<!-- @account.messages  -->
 			</li>
 
 		</ul>
 	</div>
+
+
+
 	<div class="col-md-6 col-md-offset-0">
-		<h1>My Profile Page</h1>
+				<h2><small>(Search Under Construction)</small></h2>
+					<%= form_tag do %>
+						<div class="form-group">
+							<%= text_field_tag :search, params[:search], :class => 'form-control', :placeholder => 'Search Candidates By City' %>
+						</div>
+						<%= submit_tag "Search", :name => nil ,:class => 'btn btn-default"' %>
+					<% end %>      	
+					<br/>
 		<div class="panel panel-default panel-primary">
 	        <div class="panel-heading">
 	        	Your Job Postings
@@ -42,23 +52,141 @@
 	        	</p>
 	        	<% end %>
 	        </div>
+        	<ul class="list-group">
+	        	<% if @employer.job_postings.any? %>
+
+					<% @jobpostingsfeed.each do |post|  %>
+				
+						<li class="list-group-item <%= cycle("oddpost", "evenpost")%>" id="<%= post.id %>">
+							<span class="user">
+								<%= link_to job_posting_path(post) do %>
+								<h4><%= post.title %></h4>
+								<% end %>
+							</span>
+							<span class="timestamp">
+								 <%= post.city %>,<%= post.state %> - Posted <%= time_ago_in_words(post.created_at) %> ago. 
+								| Trash it: <%= link_to "", post, method: :delete, data: { confirm: "Are you sure you want to delete '#{post.title}'? " }, title: post.title, class: "glyphicon glyphicon-trash" %>
+							</span>
+						</li>
+					<% end %>
+				<% end %>
+				<%= will_paginate @jobpostingsfeed, renderer: BootstrapPagination::Rails  %>
+			</ul>
+        </div>
+
+		<div class="panel panel-default panel-primary">
+	        <div class="panel-heading">
+	        	My Contacts	      
+					<%= form_tag followme_employer_path, :method => 'get', :class => 'navbar-form navbar-right addbox'  do %>
+						<div class="form-group">
+							<%= text_field_tag :search, params[:search], :class => 'form-control', :placeholder => 'Add by E-mail' %>
+						</div>
+						<%= submit_tag "Add Contact", :name => nil ,:class => 'btn btn-default"' %>
+					<% end %>      	
+	        	<p class="pull-right">
+	        		<span class="glyphicon glyphicon-plus-sign"></span>
+	        	</p>
+	        </div>
 	    	<ul class="list-group">
+				<div>
+					<% if current_user.all_following.first != nil %>
+						<% current_user.all_following.each do |user| %>
+								<li class="list-group-item">
+									<span>
+										<% if user.type == "Employer" %>
+											<%= link_to employer_path(user.id) do %>
+											<%= user.name %>
+											<% end %>
+										<% elsif user.type == "Sponsor" %>
+											<%= link_to sponsor_path(user.id) do %>
+											<%= user.name %>
+											<% end %>									
+										<% end %>
+									</span>
 
-	    		
-		        <li class="list-group-item"><%= render 'shared/jobpostfeed' %></li>
-
+									<span class="pull-right">
+										<% if user.type == "Employer" && user.job_postings.any? %>
+											 <%= user.job_postings.last.title %>, added <%= time_ago_in_words(user.job_postings.last.created_at) %> ago.
+										<% elsif user.type == "Sponsor" && user.candidates.any? %>
+											added <%= user.candidates.last.name %>, <%= time_ago_in_words(user.candidates.last.created_at) %> ago.
+										<% else %>
+											No activity yet!
+										<% end %>
+									</span>
+								</li>
+						<% end %>
+					<% end %>
+				</div>
 	        </ul>
+        </div>
+<div class="row-fluid">
+			<div class="col-md-9 col-md-offset-2">
+				<div class="page-header">
+				<h3><small>Communications</small></h3>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="col-md-6 col-md-offset-4">
+        <div class="panel panel-default panel-primary">
+	        <div class="panel-heading">
+	        	Received Messages
+			</div>
+
+        	<ul class="list-group">
+			<% if has_message?(current_user) %>
+				<% @currentusermailbox.each do |message_attribute| %>
+				<% @message_attributes = { name: message_attribute.originator.name, body: message_attribute.original_message.body, subject: message_attribute.original_message.subject, created_at: message_attribute.original_message.created_at  } %>
+				<li class="list-group-item <%= cycle("oddpost-mailbox", "evenpost")%>" id="<%= message_attribute.id %>"> 
+					<h4><small><%= "Received From:" %></small><small class="black-text"><%= " #{@message_attributes[:name] }" %></small><small> (<%= "#{time_ago_in_words(@message_attributes[:created_at]) } ago" %>)</small></h4>
+					<h4><small><%= "Subject:" %></small><small class="black-text"><%= " #{@message_attributes[:subject] }" %></small></h4>
+					<div class="glyphicon glyphicon-forward"></div> <%= "#{@message_attributes[:body]}" %>
+				</li>
+				<% end %> 
+				<%= will_paginate @currentusermailbox, :param_name => 'mailbox', renderer: BootstrapPagination::Rails  %>
+			<% end %>
+			</ul>
+        </div>
+        <div class="panel panel-default panel-primary">
+	        <div class="panel-heading">
+	        	Sent Messages<br/><br/>
+	        	<p class="pull-right">
+	        		<div class="form-group">
+	        		<%= form_tag({controller: "mailboxes", action: "create"}, method: :post) do %>
+					<%= select_tag :recipient_id , options_from_collection_for_select(current_user.all_following, :id , :name) %>
+					<%= text_field_tag :subject %>
+					<%= text_area_tag :body %>
+					<%= submit_tag 'Send Message' %>
+					<% end %>
+					</div>
+	        	</p>
+			</div>
+
+        	<ul class="list-group">
+			<% if has_message?(current_user) %>
+				<% @currentusersentbox.each do |message_attribute| %>
+				<% @message_attributes = { name: message_attribute.participants.second.name, body: message_attribute.original_message.body, subject: message_attribute.original_message.subject, created_at: message_attribute.original_message.created_at  } %>
+				<li class="list-group-item <%= cycle("oddpost-sentbox", "evenpost")%>" id="<%= message_attribute.id %>">
+					<h4><small><%= "Sent to:" %></small><small class="black-text"><%= " #{@message_attributes[:name] }" %></small><small> (<%= "#{time_ago_in_words(@message_attributes[:created_at]) } ago" %>)</small></h4>
+					<h4><small><%= "Subject:" %></small><small class="black-text"><%= " #{@message_attributes[:subject] }" %></small></h4>
+					<div class="glyphicon glyphicon-forward"></div> <%= "#{@message_attributes[:body]}" %>
+				</li>
+				<% end %> 
+				<%= will_paginate @currentusersentbox, :param_name => 'sentbox', renderer: BootstrapPagination::Rails  %>
+			<% end %>
+			</ul>
         </div>
 	</div>
 </div>
 
-
 <% elsif signed_in? %>
 <div class="row-fluid">
-	<div class="col-md-9 col-md-offset-4">
-		<h1>This is <%= @employer.name.capitalize %>'s Profile Page!</h1>
-		<h3>Type: Employer</h3>
-	</div>
+	
+		<%= render 'employer_page' %>
+	
 </div>
 
 
@@ -69,3 +197,7 @@
 	</div>
 </div>
 <% end %>
+
+
+
+

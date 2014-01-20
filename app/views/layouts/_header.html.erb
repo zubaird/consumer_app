@@ -8,27 +8,28 @@
 		  	</div>
 		  	<div class="collapse navbar-collapse  pull-right" id="bs-example-navbar-collapse-1">
 			    <ul class="nav navbar-nav">
-			      <li class="active"><a href="#">Help</a></li>
+			      	<li class="#{is_active?(static_pages_help_path)}"><a href="#">Help</a></li>
 			      <!-- <li><a href="#">Sign in</a></li> -->
-			    </ul>
-
-			<% if signed_in? %>
-				<p class="navbar-text navbar-right"><%= link_to "Log out (#{current_user.name})", signout_path, { method: "delete", class: "navbar-link"} %></p>	
-			<% end %>
-			<% if signed_in? && employer_user? %>	
-				<p class="navbar-text navbar-right"><%= link_to "My Profile", employer_path(current_user) , class: "navbar-link" %></p>
-			<% elsif signed_in? && sponsor_user? %>	
-				<p class="navbar-text navbar-right"><%= link_to "My Profile", sponsor_path(current_user) , class: "navbar-link" %></p>
-			<% end %> 
-
-			<% if signed_in? && employer_user? %>			
-				<p class="navbar-text navbar-right"><%= link_to "Settings", edit_employer_path(current_user), class: "navbar-link" %></p>
-			<% elsif signed_in? && sponsor_user? %>			
-				<p class="navbar-text navbar-right"><%= link_to "Settings", edit_sponsor_path(current_user), class: "navbar-link" %></p>
-			<% else %> 
-				<p class="navbar-text navbar-right">Not signed in<a href="#" class="navbar-link">!</a></p>
-			<% end %> 
+					<% if signed_in? && employer_user? %>	
+						<li class="<%= "#{is_active?(employer_path(current_user))}"%>"><%= link_to "My Profile", employer_path(current_user) , class: "navbar-link" %></li>
+					<% elsif signed_in? && sponsor_user? %>	
+						<li class="<%= "#{is_active?(sponsor_path(current_user))}"%>"><%= link_to "My Profile", sponsor_path(current_user) , class: "navbar-link" %></li>
+					<% end %> 
+					<% if signed_in? && employer_user? %>			
+						<li class="<%= "#{is_active?(edit_employer_path(current_user))}"%>"><%= link_to "Settings", edit_employer_path(current_user), class: "navbar-link" %></li>
+					<% elsif signed_in? && sponsor_user? %>			
+						<li class="<%= "#{is_active?(edit_sponsor_path(current_user))}"%>"><%= link_to "Settings", edit_sponsor_path(current_user), class: "navbar-link" %></li>
+					<% end %> 
+					<% if signed_in? %>
+						<li class="<%= "#{is_active?(signout_path)}" %>"> <%= link_to "Log out (#{current_user.name})", signout_path, { method: "delete", class: "navbar-link"} %></li>
+					<% else %>
+						<li class="<%= "#{is_active?(signin_path)}"%>"><%= link_to "Sign in", signin_path %></li>
+					<% end %>
+			 	</ul>
 			</div>
 		</nav>
 	</div>
 </div>
+
+
+

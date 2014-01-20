@@ -15,7 +15,10 @@ class EmployersController < AccountsController
 	def show
 		if signed_in?
 		@employer = Employer.find(params[:id])
-		@jobpostfeed_items = current_user.job_postings.paginate(page: params[:page])
+		@jobpostfeed_items = @employer.job_postings.paginate(page: params[:page])
+		@jobpostingsfeed = @employer.job_postings.paginate(page: params[:page], per_page: 5)
+		@currentusermailbox = @employer.mailbox.inbox.paginate(page: params[:mailbox], per_page: 5)
+		@currentusersentbox = @employer.mailbox.sentbox.paginate(page: params[:sentbox], per_page: 5)
 		end
 	end
 	
@@ -44,6 +47,40 @@ class EmployersController < AccountsController
 			render 'edit'
 		end
 	end
+
+
+	def followme 
+		search = params[:search]
+		@user = Account.find_by(email: search)
+
+	  if current_user
+
+	    if current_user == @user
+			flash[:error] = "You cannot follow yourself."
+			redirect_to employer_path(current_user)
+
+		elsif @user == nil
+			flash[:error] = "#{search} E-mail could not be found, please make sure that they are signed up!".html_safe
+			redirect_to employer_path(current_user)
+
+		elsif current_user.following?(@user) == true
+			flash[:error] = "You are already following #{search}".html_safe
+			redirect_to employer_path(current_user)
+
+	    else
+			current_user.follow(@user)
+			# RecommenderMailer.new_follower(@sponsor).deliver if @sponsor.notify_new_follower
+			flash[:success] = "You are now following #{@user.name}."
+			redirect_to employer_path(current_user)
+	    end
+	  else
+		redirect_to(root_url) 
+	  end
+	end
+
+
+
+
 
 # => The 2 Methods below are to do friendly forwarding
 

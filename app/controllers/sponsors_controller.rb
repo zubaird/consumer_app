@@ -14,14 +14,14 @@ class SponsorsController < ApplicationController
 
 	def show
 		if signed_in?
-		@sponsor = Sponsor.find(params[:id])
-		@candidatesfeed_items = current_user.candidates.paginate(page: params[:page])
+			@sponsor = Sponsor.find(params[:id])
+			@candidatesfeed_items = @sponsor.candidates.paginate(page: params[:page])
+			@candidatesfeed = @sponsor.candidates.paginate(page: params[:page], per_page: 5)
+			@currentusermailbox = @sponsor.mailbox.inbox.paginate(page: params[:mailbox], per_page: 5)
+			@currentusersentbox = @sponsor.mailbox.sentbox.paginate(page: params[:sentbox], per_page: 5)
+			@jobsearch = params[:search]
 		end
 	end
-
-
-
-
 
 	def edit
 		@sponsor = Sponsor.find(params[:id])
@@ -37,6 +37,70 @@ class SponsorsController < ApplicationController
 		end
 	end
 
+
+	def jobsearch
+		jobsearch = params[:searchjobs]
+
+
+		@userquery = JobPosting.find_by(city: params[:searchjobs])
+	
+#query is not being saved
+
+
+		if @userquery.nil?
+			flash[:error] = "Jobs in #{jobsearch} could not be found".html_safe
+			redirect_to sponsor_path(current_user)
+		else 
+		flash[:success] = "We found jobs in #{@userquery.city}."
+		redirect_to sponsor_path(current_user)
+		end
+
+	end
+
+
+
+
+
+
+	# def followthis
+	# 	@find_account = Sponsor.find_by(email: params[:session][:email].downcase)
+	# 	redirect_to @sponsor
+	# end
+
+
+	def followme 
+		search = params[:search]
+		@user = Account.find_by(email: search)
+
+	  if current_user
+
+	    if current_user == @user
+			flash[:error] = "You cannot follow yourself."
+			redirect_to sponsor_path(current_user)
+
+		elsif @user == nil
+			flash[:error] = "#{search} E-mail could not be found, please make sure that they are signed up!".html_safe
+			redirect_to sponsor_path(current_user)
+
+		elsif current_user.following?(@user) == true
+			flash[:error] = "You are already following #{search}".html_safe
+			redirect_to sponsor_path(current_user)
+
+	    else
+			current_user.follow(@user)
+			# RecommenderMailer.new_follower(@sponsor).deliver if @sponsor.notify_new_follower
+			flash[:success] = "You are now following #{@user.name}."
+			redirect_to sponsor_path(current_user)
+	    end
+	  else
+		redirect_to(root_url) 
+	  end
+	end
+
+	# def search
+	# 	q = params[:user][:email]
+	# 	@users = Sponsor.find(:all, :conditions => ["name LIKE %?%",q])
+	# end
 
 
 

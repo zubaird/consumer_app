@@ -1,5 +1,6 @@
 class AccountsController < ApplicationController
 
+
 	before_action :signed_in_user, only: [:edit, :update, :index, :destroy, :following, :followers] 
 	before_action :correct_account,  only: [:edit, :update] 
 
@@ -13,6 +14,13 @@ class AccountsController < ApplicationController
 
 	def show
 		@account = Account.find(params[:id])
+		if @account.type == "Sponsor"
+			redirect_to sponsor_path(@account)
+		elsif @account.type == "Employer"
+			redirect_to employer_path(@account)
+		else
+			redirect_to root_path
+		end
 	end
 	
 	def create
@@ -40,6 +48,17 @@ class AccountsController < ApplicationController
 			render 'edit'
 		end
 	end
+
+
+  # def following
+  #   @title = "Following"
+  #   @account = Account.find(params[:id])
+  #   @accounts = @account.followed_users #.paginate(page: params[:page])
+  #   @allaccounts = Account.all
+  #   render 'show_follow'
+  # end
+
+
 
 # => The 2 Methods below are to do friendly forwarding
 

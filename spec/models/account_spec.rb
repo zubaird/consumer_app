@@ -13,9 +13,16 @@ describe Account do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
 
-  it { should respond_to(:remember_token) }
+  it { should respond_to(:remember_token) } #Session rememberence
 
-  it {should respond_to(:type)}
+  it {should respond_to(:type)} #Employer or Sponsor 
+
+
+# => RELATIONSHIP MODEL
+
+  it { should respond_to(:relationships) }
+  it { should respond_to(:followed_users) }
+
 
   it { should be_valid }
 

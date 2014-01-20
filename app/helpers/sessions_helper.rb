@@ -15,6 +15,8 @@ module SessionsHelper
   def current_user
     remember_token = Account.encrypt(cookies[:remember_token])
     @current_user ||= Account.find_by(remember_token: remember_token)
+    #@current_user ||= Sponsor.find_by(remember_token: remember_token)
+   
   end
 
   def signed_in?
@@ -54,3 +56,19 @@ module SessionsHelper
 
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

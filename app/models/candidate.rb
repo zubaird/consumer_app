@@ -12,7 +12,7 @@ class Candidate < ActiveRecord::Base
 	validates :bio, presence: true, length: { minimum: 140 }
 	validates :city, presence: true,  format: { with: VALID_LOCATION_REGEX } 
 	validates :state, presence: true, length: { maximum: 2 }, format: { with: VALID_LOCATION_REGEX } 
-	validates :has_transport, presence: true
+	#validates :has_transport
 	#validates :sponsor_id, presence: true
 	#validates :additional_skills
 
