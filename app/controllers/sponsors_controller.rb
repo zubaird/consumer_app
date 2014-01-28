@@ -19,7 +19,19 @@ class SponsorsController < ApplicationController
 			@candidatesfeed = @sponsor.candidates.paginate(page: params[:page], per_page: 5)
 			@currentusermailbox = @sponsor.mailbox.inbox.paginate(page: params[:mailbox], per_page: 5)
 			@currentusersentbox = @sponsor.mailbox.sentbox.paginate(page: params[:sentbox], per_page: 5)
-			@jobsearch = params[:search]
+
+			if params[:searchjobs] != nil
+				@query = params[:searchjobs]
+			else 
+				@query = " "
+			end
+
+			@jobsearchresults = []
+			unless params[:searchjobs].nil? || params[:searchjobs].strip.empty?
+				@search = JobPosting.search {fulltext params[:searchjobs]}
+				@jobsearchresults = @search.results
+			end
+			@jobsearchresults
 		end
 	end
 
@@ -36,30 +48,6 @@ class SponsorsController < ApplicationController
 			render 'edit'
 		end
 	end
-
-
-	def jobsearch
-		jobsearch = params[:searchjobs]
-
-
-		@userquery = JobPosting.find_by(city: params[:searchjobs])
-	
-#query is not being saved
-
-
-		if @userquery.nil?
-			flash[:error] = "Jobs in #{jobsearch} could not be found".html_safe
-			redirect_to sponsor_path(current_user)
-		else 
-		flash[:success] = "We found jobs in #{@userquery.city}."
-		redirect_to sponsor_path(current_user)
-		end
-
-	end
-
-
-
-
 
 
 	# def followthis

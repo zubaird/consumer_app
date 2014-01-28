@@ -32,17 +32,53 @@
 		</ul>
 	</div>
 
-
-
 	<div class="col-md-6 col-md-offset-0">
-				<h2><small>(Search Under Construction)</small></h2>
-					<%= form_tag do %>
-						<div class="form-group">
-							<%= text_field_tag :search, params[:search], :class => 'form-control', :placeholder => 'Search Candidates By City' %>
-						</div>
-						<%= submit_tag "Search", :name => nil ,:class => 'btn btn-default"' %>
-					<% end %>      	
-					<br/>
+		<h2><small>Search Candidates by City</small></h2> 
+		<%= form_tag employer_path, :method => 'get' do %>
+			<div class="form-group">
+				<%= text_field_tag :searchcandidates, params[:searchcandidates], :class => 'form-control', :placeholder => 'Enter City Name i.e. modesto' %>
+			</div>
+			<%= submit_tag "Search", :name => nil ,:class => 'btn btn-default"' %>
+		<% end %>
+		<br/>
+		<% if !@candidatesearchresults.empty? && !params[:searchcandidates].blank? %>
+			<div class="panel panel-default panel-primary">
+	        	<div class="panel-heading">
+	        		<%= "Candidate Search Results for #{@candidatesearchresults.first.city}. . ." %>
+	        	</div>
+        		<ul class="list-group">
+					<% for result in @candidatesearchresults %>
+					<li class="list-group-item" id="testdom">
+						<%= link_to result do %>
+							<h3><%= result.name %></h3>
+							  <% if result.bio.length > 250 %>
+							    <%= truncate(result.bio, length: 250) %>
+							    ...Read more
+							  <% else %>
+							    <%= result.bio %><br/>
+							  <% end %>
+						<% end %>
+					<div class="pull-right">
+						Posted <%= time_ago_in_words(result.created_at) %> ago. 
+					</div>
+					</li>
+					<% end %>	
+        		</ul>
+			</div>
+		<% elsif @candidatesearchresults.empty? && !@query.blank?  %>
+		<div class="panel panel-default panel-primary">
+	        <div class="panel-heading">
+	        	Candidate Search Results. . .
+	        </div>
+			<ul class="list-group">
+				<li class="list-group-item">	
+						No candidates found in that city.
+				</li>
+        	</ul>
+			</div>
+		<% end %>
+		<br/>
+
 		<div class="panel panel-default panel-primary">
 	        <div class="panel-heading">
 	        	Your Job Postings

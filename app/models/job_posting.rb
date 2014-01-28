@@ -1,10 +1,14 @@
 class JobPosting < ActiveRecord::Base
-
-
-
+	
 	attr_accessible :title, :description, :city, :state, :tag
 
+	searchable do
+    	text :city, :description
+	end
+
 	belongs_to :employer 
+
+
 
 	validates :title, presence: true, length: { maximum: 140, minimum: 15 }, uniqueness: { case_sensitive: false }
 	validates :description, presence: true, length: { minimum: 140 }

@@ -19,6 +19,19 @@ class EmployersController < AccountsController
 		@jobpostingsfeed = @employer.job_postings.paginate(page: params[:page], per_page: 5)
 		@currentusermailbox = @employer.mailbox.inbox.paginate(page: params[:mailbox], per_page: 5)
 		@currentusersentbox = @employer.mailbox.sentbox.paginate(page: params[:sentbox], per_page: 5)
+
+		if params[:searchcandidates] != nil
+			@query = params[:searchcandidates]
+		else 
+			@query = " "
+		end
+
+		@candidatesearchresults = []
+			unless params[:searchcandidates].nil? || params[:searchcandidates].strip.empty?
+				@search = Candidate.search {fulltext params[:searchcandidates]}
+				@candidatesearchresults = @search.results
+			end
+		@candidatesearchresults
 		end
 	end
 	
