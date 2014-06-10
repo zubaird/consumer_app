@@ -3,8 +3,9 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.4'
-gem 'unicorn'
+# gem 'rails', '4.0.4'
+gem 'rails', '4.0.1'
+# gem 'unicorn'
 # => gem 'bootstrap-sass', '2.3.2.0'
 gem 'bootstrap-sass-rails'
 gem 'mailboxer'
@@ -16,7 +17,7 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'activeresource'
 gem 'protected_attributes'
-gem 'heroku'
+# gem 'heroku'
 gem 'will_paginate-bootstrap' 
 gem 'pg', '0.17.1'
 gem "acts_as_follower", '~> 0.2.0'
@@ -57,7 +58,8 @@ group :test do
    #gem 'wdm', '0.1.0'
 end
 
-gem "sass-rails", "~> 4.0.2"
+# gem "sass-rails", "~> 4.0.2"
+gem "sass-rails", "4.0.1"
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.1'
 gem 'jquery-rails', '3.0.4'
