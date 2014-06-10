@@ -1,0 +1,17 @@
+<%= provide(:title, "Profile") %>
+
+<% if signed_in? && @employer.job_postings.any? %> 
+
+	<% @employer.job_postings.each do |post|  %>
+	<%= post.title %>
+	<% end %>
+
+<% else %>
+<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+			<h2>Please Register or Sign in to view these job postings</h2>
+			<small>Thank you</small>
+	</div>
+</div>
+<% end %>
+

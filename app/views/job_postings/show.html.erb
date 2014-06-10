@@ -1,0 +1,26 @@
+<%= provide(:title, "A Job Posting") %>
+
+	<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+
+			<div class="page-header">
+			<h1><%= "#{@jobposting.title }"%></h1>
+			<h3><small><%=  link_to "<- Back to #{@postingemployer.name.capitalize}'s page", employer_path(@postingemployer) %></small></h3>
+			<h3><small>posted by: <%= "#{@postingemployer.name.capitalize}" %></small></h3>
+			<h4><small><%= "#{time_ago_in_words(@jobposting.created_at)} ago" %></small></h4>
+			</div>
+
+			<div class="col-sm-10">
+				<%= "#{@jobposting.description }"%> <br/><br/>
+			</div>
+
+			<div class="col-sm-10">
+				<%= "#{@jobposting.city }"%>, <%= "#{@jobposting.state }"%> <br/><br/>
+			</div>
+
+			<div class="col-sm-10">
+				<%= "#{@jobposting.tag }"%>
+			</div>
+
+		</div>
+	</div>

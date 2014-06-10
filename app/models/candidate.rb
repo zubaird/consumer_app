@@ -3,9 +3,10 @@ class Candidate < ActiveRecord::Base
 
 	attr_accessible :name, :bio, :city, :state, :additional_skills, :has_transport
 
-	searchable do
-    	text :city
-	end
+	# => For Solr search
+	# searchable do
+ #    	text :city
+	# end
 
 	belongs_to :sponsor
 

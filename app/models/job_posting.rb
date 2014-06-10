@@ -2,9 +2,10 @@ class JobPosting < ActiveRecord::Base
 	
 	attr_accessible :title, :description, :city, :state, :tag
 
-	searchable do
-    	text :city, :description
-	end
+	# => Solr
+	# searchable do
+ #    	text :city, :description
+	# end
 
 	belongs_to :employer 
 

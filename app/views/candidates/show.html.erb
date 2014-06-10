@@ -1,0 +1,40 @@
+<%= provide(:title, "A Candidate") %>
+
+	<div class="row-fluid">
+		<div class="col-md-6 col-md-offset-3">
+
+			<div class="page-header">
+			<h1><%= "#{@candidate.name }"%></h1>
+			<h3><small><%=  link_to "<- Back to #{@postingsponsor.name.capitalize}'s page", sponsor_path(@postingsponsor) %></small></h3>
+			<h3><small>posted by: <%= "#{@postingsponsor.name.capitalize}" %></small></h3>
+			<h4><small><%= "#{time_ago_in_words(@postingsponsor.created_at)} ago" %></small></h4>
+			</div>
+
+			<div class="col-sm-10">
+				<h4><small>Candidate Details:</small></h4>
+				<%= "#{@candidate.bio }"%> <br/><br/>
+			</div>
+
+			<div class="col-sm-10">
+				<h4><small>Additional Skills:</small></h4>
+				<%= "#{@candidate.additional_skills }"%> <br/>
+			</div>
+
+			<% if @candidate.has_transport == true %>
+			<div class="col-sm-10">
+				<h4><small>Has Own Transportation</small></h4>		
+			</div>
+			<% end %>
+
+
+			<div class="col-sm-10">
+				<h4><small>Residence</small></h4>
+				<%= "#{@candidate.city }"%>, <%= "#{@candidate.state }"%>
+			</div>
+
+
+
+
+
+		</div>
+	</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117143018) do
+ActiveRecord::Schema.define(version: 20140610041102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,12 +40,6 @@ ActiveRecord::Schema.define(version: 20140117143018) do
 
   add_index "candidates", ["sponsor_id"], name: "index_candidates_on_sponsor_id", using: :btree
 
-  create_table "conversations", force: true do |t|
-    t.string   "subject",    default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
   create_table "follows", force: true do |t|
     t.integer  "followable_id",                   null: false
     t.string   "followable_type",                 null: false
@@ -73,7 +67,13 @@ ActiveRecord::Schema.define(version: 20140117143018) do
   add_index "job_postings", ["created_at"], name: "index_job_postings_on_created_at", using: :btree
   add_index "job_postings", ["employer_id"], name: "index_job_postings_on_employer_id", using: :btree
 
-  create_table "notifications", force: true do |t|
+  create_table "mailboxer_conversations", force: true do |t|
+    t.string   "subject",    default: ""
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "mailboxer_notifications", force: true do |t|
     t.string   "type"
     t.text     "body"
     t.string   "subject",              default: ""
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(version: 20140117143018) do
     t.datetime "expires"
   end
 
-  add_index "notifications", ["conversation_id"], name: "index_notifications_on_conversation_id", using: :btree
+  add_index "mailboxer_notifications", ["conversation_id"], name: "index_mailboxer_notifications_on_conversation_id", using: :btree
 
-  create_table "receipts", force: true do |t|
+  create_table "mailboxer_receipts", force: true do |t|
     t.integer  "receiver_id"
     t.string   "receiver_type"
     t.integer  "notification_id",                            null: false
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20140117143018) do
     t.datetime "updated_at",                                 null: false
   end
 
-  add_index "receipts", ["notification_id"], name: "index_receipts_on_notification_id", using: :btree
+  add_index "mailboxer_receipts", ["notification_id"], name: "index_mailboxer_receipts_on_notification_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -118,8 +118,8 @@ ActiveRecord::Schema.define(version: 20140117143018) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
-  add_foreign_key "notifications", "conversations", name: "notifications_on_conversation_id"
+  add_foreign_key "mailboxer_notifications", "mailboxer_conversations", name: "notifications_on_conversation_id", column: "conversation_id"
 
-  add_foreign_key "receipts", "notifications", name: "receipts_on_notification_id"
+  add_foreign_key "mailboxer_receipts", "mailboxer_notifications", name: "receipts_on_notification_id", column: "notification_id"
 
 end

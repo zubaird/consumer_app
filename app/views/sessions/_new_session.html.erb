@@ -1,0 +1,14 @@
+
+			<%= form_for :session, url: sessions_path do |f| %>
+
+				<%= f.label :email %> <br/>
+				<%= f.text_field :email %> <br/>
+
+				<%= f.label :password %> <br/>
+				<%= f.password_field :password %> <br/>
+
+
+
+				<%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+
+			<% end %>

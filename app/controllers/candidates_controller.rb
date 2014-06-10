@@ -40,9 +40,3 @@ private
 
 
 end
-
-
-
-# Olaf the amazing is quite the candidate, he has always been a passionate craftsman, never turning down an 
-# opportunity to fashion shiny horns to adorn viking helmets for everyday folk.  Olaf is interested in growing his viking 
-# helmet skills and making new friends in the workforce.  He has a very high attention to detail and would be a great asset to any team.

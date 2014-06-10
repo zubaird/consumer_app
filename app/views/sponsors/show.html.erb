@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="col-md-6 col-md-offset-0">
-		<h2><small>Search Jobs by City</small></h2> 
+		<h2><small>Search Jobs by City (Paid Node with Solr Search is not online)</small></h2> 
 
 		<%= form_tag sponsor_path, :method => 'get' do %>
 			<div class="form-group">
@@ -90,12 +90,12 @@
 
 		<div class="panel panel-default panel-primary">
 	        <div class="panel-heading">
-	        	My Contacts	      
+	        	My Contacts	  (Try adding demo@example.com)    
 					<%= form_tag followme_sponsor_path, :method => 'get', :class => 'navbar-form navbar-right addbox'  do %>
 						<div class="form-group">
 							<%= text_field_tag :search, params[:search], :class => 'form-control', :placeholder => 'Add by E-mail' %>
 						</div>
-						<%= submit_tag "Add Contact", :name => nil ,:class => 'btn btn-default"' %>
+						<%= submit_tag "Add Contact", :name => nil , :class => 'btn btn-default black-text' %>
 					<% end %>      	
 	        	<p class="pull-right">
 	        		<span class="glyphicon glyphicon-plus-sign"></span>
@@ -166,10 +166,13 @@
 	        	<p class="pull-right">
 	        		<div class="form-group">
 	        		<%= form_tag({controller: "mailboxes", action: "create"}, method: :post) do %>
-					<%= select_tag :recipient_id , options_from_collection_for_select(current_user.all_following, :id , :name) %>
+					<br/>Select From The List Of People You Are Following:<br/>
+					<%= select_tag :recipient_id , options_from_collection_for_select(current_user.all_following, :id , :name, class: "black-text" ) %>
+					<br/>Subject:<br/>
 					<%= text_field_tag :subject %>
+					<br/>Message:<br/>
 					<%= text_area_tag :body %>
-					<%= submit_tag 'Send Message' %>
+					<%= submit_tag 'Send Message', class: "black-text" %>
 					<% end %>
 					</div>
 	        	</p>

@@ -1,0 +1,8 @@
+class Consumer < Account
+
+	
+
+	
+end
+
+

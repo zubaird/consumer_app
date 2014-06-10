@@ -1,0 +1,33 @@
+<div class="col-md-9 col-md-offset-2">
+	<div class="col-md-9 col-md-offset-0">
+
+			<div class="page-header">
+			<h1><%= "Updates from #{@employer.name.capitalize}" %></h1>
+			<h3><small><%=  link_to "<- Back to my profile", account_path(current_user) %></small></h3>
+			</div>
+
+	<div class="panel panel-default panel-primary">
+        <div class="panel-heading">
+        	<%= "#{@employer.name.capitalize}'s Job Postings" %>
+        </div>
+    	<ul class="list-group">
+        	<% if @employer.job_postings.any? %>
+
+				<% @jobpostingsfeed.each do |post|  %>
+			
+					<li class="list-group-item <%= cycle("oddpost", "evenpost")%>" id="<%= post.id %>">
+						<span class="user">
+							<%= link_to job_posting_path(post) do %>
+							<h4><%= post.title %></h4>
+							<% end %>
+						</span>
+						<span class="timestamp">
+							<%= post.city %>,<%= post.state %> - Posted <%= time_ago_in_words(post.created_at) %> ago. 
+						</span>
+					</li>
+				<% end %>
+			<% end %>
+			<%= will_paginate @jobpostingsfeed, renderer: BootstrapPagination::Rails  %>
+		</ul>
+    </div>
+</div>

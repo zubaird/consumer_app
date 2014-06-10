@@ -3,12 +3,12 @@ source 'https://rubygems.org'
 ruby '2.1.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
-
+gem 'rails', '4.0.4'
+gem 'unicorn'
 # => gem 'bootstrap-sass', '2.3.2.0'
 gem 'bootstrap-sass-rails'
 gem 'mailboxer'
-gem 'sunspot_rails'
+# gem 'sunspot_rails'
 
 gem 'bcrypt-ruby', '3.1.2'
 gem 'faker', '1.1.2'
@@ -24,7 +24,7 @@ gem 'acts-as-messageable'
 #gem 'mailboxer'
 
 group :development, :test do
-  # => gem 'sqlite3', '1.3.8' - FOR HEROKU COMPATIBILITY
+  # => gem 'sqlite3', '1.3.8' - FOR HEROKU COMPATIBILITY`
   # => gem 'pg', '0.17.1'
    gem 'rspec-rails'
    gem "rails-erd"
@@ -33,7 +33,7 @@ group :development, :test do
    gem 'spork-rails', '4.0.0'
   # gem 'guard-spork', '1.5.0'
   # gem 'childprocess', '0.3.6'
-  gem 'sunspot_solr'
+  # gem 'sunspot_solr'
 end
 
 group :test do
@@ -45,24 +45,25 @@ group :test do
   gem 'database_cleaner', github: 'bmabey/database_cleaner'  #for cucumber
   gem 'shoulda-matchers'
 
-  # Uncomment this line on OS X.
+  # OS X
    gem 'growl', '1.0.3'
 
-  # Uncomment these lines on Linux.
+  # Linux
   # gem 'libnotify', '0.8.0'
 
-   #Uncomment these lines on Windows.
+   # Windows
    #gem 'rb-notifu', '0.0.4'
    #gem 'win32console', '1.3.2'
    #gem 'wdm', '0.1.0'
 end
 
-gem 'sass-rails', '4.0.1'
+gem "sass-rails", "~> 4.0.2"
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.1'
 gem 'jquery-rails', '3.0.4'
 gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
+
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false
